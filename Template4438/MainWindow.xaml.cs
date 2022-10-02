@@ -103,5 +103,11 @@ namespace Template4438
             _4438_Britvina window = new _4438_Britvina();
             window.Show();
         }
+
+        private void BtnKhaev_Click(object sender, RoutedEventArgs e)
+        {
+            KhaevWindow window = new KhaevWindow();
+            window.Show();
+        }
     }
 }
