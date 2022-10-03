@@ -103,5 +103,10 @@ namespace Template4438
             _4438_Britvina window = new _4438_Britvina();
             window.Show();
         }
+        private void BtnSafiullin_Click(object sender, RoutedEventArgs e)
+        {
+            _4438SafiullinRR window = new _4438SafiullinRR();
+            window.Show();
+        }
     }
 }
