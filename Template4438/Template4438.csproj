@@ -70,6 +70,9 @@
     <Compile Include="GallyamovARwindow.xaml.cs">
       <DependentUpon>GallyamovARwindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="NabiullinaWindow.xaml.cs">
+      <DependentUpon>NabiullinaWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SharafetdinovWindow.xaml.cs">
       <DependentUpon>SharafetdinovWindow.xaml</DependentUpon>
     </Compile>
@@ -121,6 +124,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NabiullinaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SharafetdinovWindow.xaml">
     </Page>
     <Page Include="ShigabievWindow.xaml">
