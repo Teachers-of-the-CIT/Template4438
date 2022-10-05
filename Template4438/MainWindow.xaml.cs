@@ -114,5 +114,12 @@ namespace Template4438
             _4438SafiullinRR window = new _4438SafiullinRR();
             window.Show();
         }
+
+        private void ilinButton_Click(object sender, RoutedEventArgs e)
+        {
+            var ilinWindow = new IlinWindow();
+            ilinWindow.Show();
+            this.Close();
+        }
     }
 }

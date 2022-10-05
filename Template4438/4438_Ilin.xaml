@@ -1,0 +1,45 @@
+﻿<Window x:Class="Template4438.IlinWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Информация об изменении" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="4*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Цвета головы (head) и ног (footer) страницы -->
+        <Rectangle Grid.Row="0" x:Name="headColorRectangle" Fill="#f0f0f0" />
+        <Rectangle Grid.Row="2" x:Name="footerColorRectangle" Fill="#f0f0f0" />
+
+        <!-- Заголовок страницы -->
+        <TextBlock Grid.Row="0" Text="Информация об изменении" FontFamily="Roboto" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+        <!-- Тело страницы -->
+        <StackPanel Grid.Row="1" Name="mainStackPanel" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <!-- Имя -->
+            <StackPanel Name="dateStackPanel" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Name="dateLabel" Margin="5" Text="Автор изменения: " FontFamily="Roboto" FontSize="24" />
+                <TextBlock Name="dateValue" Margin="5" Text="Ярослав" FontFamily="Roboto" FontSize="24" />
+            </StackPanel>
+
+            <!-- Возраст -->
+            <StackPanel Name="timeStackPanel" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Name="timeLabel" Margin="5" Text="Возраст автора: " FontFamily="Roboto" FontSize="24" />
+                <TextBlock Name="timeValue" Margin="5" Text="18" FontFamily="Roboto" FontSize="24" />
+            </StackPanel>
+
+        </StackPanel>
+
+        <!-- Footer -->
+        <StackPanel Grid.Row="2" Margin="20,0,20,0" Name="footerStackPanel" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Button x:Name="backButton" Content="Назад" Padding="5" FontFamily="Roboto" FontSize="24" Click="backButton_Click" />
+        </StackPanel>
+
+    </Grid>
+</Window>

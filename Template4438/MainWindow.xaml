@@ -39,6 +39,7 @@
         <Button x:Name="BnVafin" Click="BnVafin_Click" Content="Вафин Б. М." Grid.Row="3"></Button>
         <Button x:Name="BtnVasilev" Click="BtnVasilev_Click" Content="Васильев М.В." Grid.Row="5"></Button>
         <Button x:Name="BGallyamov" Click="BGallyamov_Click" Content="Галлямов А.Р." Grid.Row="7"></Button>
+        <Button x:Name="ilinButton" Grid.Row="8" Content="Ильин Я. Э." Click="ilinButton_Click" />
         <Button x:Name="BTovmach" Click="BTovmach_Click"  Content="Товмач А.О." Grid.Row="9"></Button>
         <Button x:Name="BtnSharafetdinov" Click="BtnSharafetdinov_Click" Content="Шарафетдинов Н.А." Grid.Row="23"></Button>
         <Button x:Name="btnGalimov" Click="btnGalimov_Click" Content="Галимов" Grid.Row="9"></Button>
