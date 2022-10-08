@@ -7,12 +7,12 @@
       <Schema Namespace="Хранилище Isrpo_2lrModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Services">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="IdServices" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
-          <Property Name="Service_Name" Type="nvarchar" MaxLength="150" />
-          <Property Name="Service_Type" Type="nvarchar" MaxLength="100" />
-          <Property Name="Service_Code" Type="nvarchar" MaxLength="10" />
+          <Property Name="IdServices" Type="int" Nullable="false" />
+          <Property Name="NameServices" Type="nvarchar(max)" />
+          <Property Name="TypeOfService" Type="nvarchar(max)" />
+          <Property Name="CodeService" Type="nvarchar(max)" />
           <Property Name="Cost" Type="int" />
         </EntityType>
         <EntityContainer Name="Хранилище Isrpo_2lrModelContainer">
@@ -25,15 +25,15 @@
       <Schema Namespace="Isrpo_2lrModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Services">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="IdServices" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="Service_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Service_Type" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Service_Code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="IdServices" Type="Int32" Nullable="false" />
+          <Property Name="NameServices" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TypeOfService" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CodeService" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Cost" Type="Int32" />
         </EntityType>
-        <EntityContainer Name="Isrpo_2lrEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="Isrpo_2lr_Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Services" EntityType="Self.Services" />
         </EntityContainer>
       </Schema>
@@ -41,14 +41,14 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище Isrpo_2lrModelContainer" CdmEntityContainer="Isrpo_2lrEntities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище Isrpo_2lrModelContainer" CdmEntityContainer="Isrpo_2lr_Entities">
           <EntitySetMapping Name="Services">
             <EntityTypeMapping TypeName="Isrpo_2lrModel.Services">
               <MappingFragment StoreEntitySet="Services">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Service_Name" ColumnName="Service_Name" />
-                <ScalarProperty Name="Service_Type" ColumnName="Service_Type" />
-                <ScalarProperty Name="Service_Code" ColumnName="Service_Code" />
+                <ScalarProperty Name="IdServices" ColumnName="IdServices" />
+                <ScalarProperty Name="NameServices" ColumnName="NameServices" />
+                <ScalarProperty Name="TypeOfService" ColumnName="TypeOfService" />
+                <ScalarProperty Name="CodeService" ColumnName="CodeService" />
                 <ScalarProperty Name="Cost" ColumnName="Cost" />
               </MappingFragment>
             </EntityTypeMapping>

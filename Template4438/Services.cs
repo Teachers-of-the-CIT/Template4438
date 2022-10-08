@@ -14,10 +14,10 @@ namespace Template4438
     
     public partial class Services
     {
-        public int ID { get; set; }
-        public string Service_Name { get; set; }
-        public string Service_Type { get; set; }
-        public string Service_Code { get; set; }
+        public int IdServices { get; set; }
+        public string NameServices { get; set; }
+        public string TypeOfService { get; set; }
+        public string CodeService { get; set; }
         public Nullable<int> Cost { get; set; }
     }
 }
