@@ -195,7 +195,7 @@ namespace Template4438
                             Word.WdParagraphAlignment.wdAlignParagraphCenter;
                             row = row+1;
                         }
-
+                        document.Words.Last.InsertBreak(Word.WdBreakType.wdSectionBreakNextPage);
                     }
                     app.Visible = true;
            
@@ -230,6 +230,7 @@ namespace Template4438
                     maint.CreateDate = m.CreateDate;
                     maint.Status = m.Status;
                     maint.ClosedDate = m.ClosedDate;
+                    maint.Services = m.Services;
                     db.MainTable.Add(maint);
                 }
                 db.SaveChanges();
