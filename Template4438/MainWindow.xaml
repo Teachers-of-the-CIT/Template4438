@@ -37,5 +37,6 @@
         <Button x:Name="BnTask" Click="BnTask_Click" Content="Задача" Grid.Row="0"></Button>
         <Button x:Name="BnKarnaukh" Click="BnKarnaukh_Click" Content="Карнаух А. Л." Grid.Row="1"></Button>
         <Button x:Name="BnVafin" Click="BnVafin_Click" Content="Вафин Б. М." Grid.Row="3"></Button>
+        <Button x:Name="BnRahimov" Click="BnRahimov_Click" Content="Рахимов М. В." Grid.Row="4"></Button>
     </Grid>
 </Window>

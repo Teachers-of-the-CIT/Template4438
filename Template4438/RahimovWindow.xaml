@@ -7,6 +7,22 @@
         mc:Ignorable="d"
         Title="RahimovWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="82*"/>
+            <RowDefinition Height="267*"/>
+            <RowDefinition Height="85*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="21*"/>
+            <ColumnDefinition Width="57*"/>
+            <ColumnDefinition Width="22*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock HorizontalAlignment="Left" Margin="147,28,0,0" TextWrapping="Wrap" Text="Информация об авторе" FontSize="28" VerticalAlignment="Top" Grid.Column="1" Height="37" Width="306"/>
+        <TextBlock HorizontalAlignment="Left" Margin="147,87,0,0" TextWrapping="Wrap" Text="Имя: Марсель" FontSize="24" VerticalAlignment="Top" Grid.Column="1" Height="32" Width="155" Grid.Row="1"/>
+        <TextBlock HorizontalAlignment="Left" Margin="147,204,0,0" TextWrapping="Wrap" Text="Возраст: 18" FontSize="24" VerticalAlignment="Top" Grid.Column="1" Height="32" Width="123" Grid.Row="1"/>
+        <Button x:Name="ImportBTN" FontSize="20" Content="Импорт данных" Click="ImportBTN_Click" Grid.Column="0" Grid.Row="2"  />
+        <Button x:Name="ExportBTN" FontSize="20" Content="Экспорт в Excel" Grid.Column="2" Click="ExportBTN_Click" Grid.Row="2"   />
+        <Button x:Name="JSONImportBTN" FontSize="20" Content="Импорт JSON" Click="JSONImportBTN_Click" Grid.Column="0" Grid.Row="0"  />
+        <Button x:Name="ExportWordBTN" FontSize="20" Content="Экспорт в Word" Grid.Column="2" Click="ExportWordBTN_Click" Grid.Row="0" />
     </Grid>
 </Window>

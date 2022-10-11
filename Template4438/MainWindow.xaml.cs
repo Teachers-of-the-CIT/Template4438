@@ -47,7 +47,7 @@ namespace Template4438
         private void BnRahimov_Click(object sender, RoutedEventArgs e)
         {
             RahimovWindow rahimov = new RahimovWindow();
-            RahimovWindow.Show();
+            rahimov.Show();
             this.Hide();
         }
     }
