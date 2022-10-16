@@ -10,9 +10,11 @@
 		<StackPanel HorizontalAlignment="Center">
 			<TextBlock >Автор: Васильев Максим</TextBlock>
 			<TextBlock >Возраст: 19</TextBlock>
-			<TextBlock >Специальность: Информационные сисетмы и программирование</TextBlock>
+			<TextBlock >Специальность: Информационные системы и программирование</TextBlock>
 			<TextBlock >Гороскоп: Телец</TextBlock>
-			<Button Name="Back" Click="Back_Click" Margin="20">Назад</Button>
+			<Button Name="ImportData" Click="ImportData_Click" Margin="10">Импорт данных</Button>
+			<Button Name="ExportData" Click="ExportData_Click" Margin="10">Экспорт данных</Button>
+			<Button Name="Back" Click="Back_Click" Margin="10">Назад</Button>
 		</StackPanel>
 	</Grid>
 </Window>
