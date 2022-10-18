@@ -30,6 +30,8 @@
             <RowDefinition Height="51*"/>
         </Grid.RowDefinitions>
         <Button
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
             Style="{StaticResource btnStyle}"
             x:Name="backBTN" Click="backBTN_Click"
             
@@ -50,13 +52,19 @@
             
             >Экспорт[Excel]</Button>
         </WrapPanel>
-        <RichTextBox
+        <ScrollViewer
             Grid.Column="0"
             Grid.ColumnSpan="3"
             Grid.Row="1"
+            >
+            <TextBlock
+            x:Name="displayTB"
+            Background="Bisque"
             FontFamily="Comic Sans MS"
             FontSize="20"
-            ></RichTextBox>
+            ></TextBlock>
+        </ScrollViewer>
+        
         <TextBlock
             Grid.Row="2"
             Grid.ColumnSpan="3"
