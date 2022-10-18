@@ -107,6 +107,7 @@ namespace Template4438
         {
             _4438SafiullinRR window = new _4438SafiullinRR();
             window.Show();
+            this.Close();
         }
     }
 }

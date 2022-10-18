@@ -23,5 +23,22 @@ namespace Template4438
         {
             InitializeComponent();
         }
+
+        private void backBTN_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = new MainWindow();
+            main.Show();
+            this.Close();
+        }
+
+        private void importBTN_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void exportBTN_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

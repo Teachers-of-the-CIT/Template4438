@@ -10,6 +10,6 @@
         <TextBlock HorizontalAlignment="Left" Margin="205,30,0,0" TextWrapping="Wrap" Text="Информация об авторе:" VerticalAlignment="Top" Height="45" Width="392" FontSize="30"/>
         <TextBlock HorizontalAlignment="Left" Margin="183,128,0,0" TextWrapping="Wrap" Text="Имя: Риназ" VerticalAlignment="Top" Height="45" Width="392" FontSize="30"/>
         <TextBlock HorizontalAlignment="Left" Margin="183,201,0,0" TextWrapping="Wrap" Text="Возраст: 19 лет" VerticalAlignment="Top" Height="45" Width="392" FontSize="30"/>
-
+        
     </Grid>
 </Window>
