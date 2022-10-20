@@ -114,5 +114,21 @@ namespace Template4438
             _4438SafiullinRR window = new _4438SafiullinRR();
             window.Show();
         }
+
+        private void BtnVoronina_Click(object sender, RoutedEventArgs e)
+        {
+            VoroninaWindow Krrr = new VoroninaWindow();
+            Krrr.Show();
+            this.Hide();
+        }
+
+        private void BtnGareeva_Click(object sender, RoutedEventArgs e)
+        {
+
+            GareevaWindow Grrr = new GareevaWindow();
+            Grrr.Show();
+            this.Hide();
+
+        }
     }
 }

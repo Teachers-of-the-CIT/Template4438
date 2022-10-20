@@ -73,6 +73,9 @@
     <Compile Include="GallyamovARwindow.xaml.cs">
       <DependentUpon>GallyamovARwindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GareevaWindow.xaml.cs">
+      <DependentUpon>GareevaWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NabiullinaWindow.xaml.cs">
       <DependentUpon>NabiullinaWindow.xaml</DependentUpon>
     </Compile>
@@ -84,6 +87,9 @@
     </Compile>
     <Compile Include="VasilevWindow.xaml.cs">
       <DependentUpon>VasilevWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="VoroninaWindow.xaml.cs">
+      <DependentUpon>VoroninaWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="4438SafiullinRR.xaml">
       <SubType>Designer</SubType>
@@ -106,6 +112,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GallyamovARwindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GareevaWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -142,6 +152,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="VasilevWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VoroninaWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

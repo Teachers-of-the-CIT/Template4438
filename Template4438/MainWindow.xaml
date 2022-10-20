@@ -47,5 +47,7 @@
         <Button x:Name="BtnBritvina" Click="BtnBritvina_Click" Content="Бритвина П.А" Grid.Row="22"/>
         <Button x:Name="BtnNabiullina" Click="BtnNabiullina_Click" Content="Набиуллина Г. Р." Grid.Row="14" Background="Pink"></Button>
         <Button x:Name="BtnSafiullin" Click="BtnSafiullin_Click" Content="Сафиуллин Р.Р." Grid.Row="17"/>
+        <Button x:Name="BtnVoronina" Click="BtnVoronina_Click" Content="Воронина К.С." Grid.Row="18" Background="#b366ff"/>
+        <Button x:Name="BtnGareeva" Click="BtnGareeva_Click" Content="Гареева В.Э." Grid.Row="19" Background="#b366ff"/>
     </Grid>
 </Window>
