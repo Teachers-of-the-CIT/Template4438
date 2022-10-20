@@ -61,6 +61,9 @@
     <Compile Include="4438_Britvina.xaml.cs">
       <DependentUpon>4438_Britvina.xaml</DependentUpon>
     </Compile>
+    <Compile Include="4438_Kharisova.xaml.cs">
+      <DependentUpon>4438_Kharisova.xaml</DependentUpon>
+    </Compile>
     <Compile Include="4438_Tovmach.xaml.cs">
       <DependentUpon>4438_Tovmach.xaml</DependentUpon>
     </Compile>
@@ -90,6 +93,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="4438_Britvina.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="4438_Kharisova.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

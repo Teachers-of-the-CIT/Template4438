@@ -114,5 +114,17 @@ namespace Template4438
             _4438SafiullinRR window = new _4438SafiullinRR();
             window.Show();
         }
+
+        private void BtnKharisova_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnKharisova_Click_1(object sender, RoutedEventArgs e)
+        {
+            _4438_Kharisova window = new _4438_Kharisova();
+            window.Show();
+            this.Hide();
+        }
     }
 }
