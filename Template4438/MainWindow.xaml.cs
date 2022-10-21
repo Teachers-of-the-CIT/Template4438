@@ -123,7 +123,8 @@ namespace Template4438
 
         private void btnTarasov_Click(object sender, RoutedEventArgs e)
         {
-
+            _4438_TarasovDE win = new _4438_TarasovDE();
+            win.Show();
         }
     }
 }
