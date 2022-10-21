@@ -120,5 +120,10 @@ namespace Template4438
             _4438_Khalikov boba = new _4438_Khalikov();
             boba.Show();
         }
+
+        private void btnTarasov_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
