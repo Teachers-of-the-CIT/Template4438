@@ -9,8 +9,11 @@
     <Window.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="FontSize" Value="30"/>
-        </Style> 
+            <Setter Property="FontSize" Value="25"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="25"/>
+        </Style>
     </Window.Resources>
     <Grid>
         <TextBlock Text="Информация об авторе"/>
@@ -18,5 +21,7 @@
             <TextBlock Text="ФИО: Шигабиев Шамиль Рамилевич"/>
             <TextBlock Text="Возраст: 18"/>
         </StackPanel>
+        <Button x:Name="ImportBtn" Content="Импорт данных" HorizontalAlignment="Left" VerticalAlignment="Top" Height="70" Width="250" Click="ImportBtn_Click"/>
+        <Button x:Name="ExportBtn" Content="Экспорт в Excel" HorizontalAlignment="Right" VerticalAlignment="Top" Height="70" Width="250" Click="ExportBtn_Click"/>
     </Grid>
 </Window>
