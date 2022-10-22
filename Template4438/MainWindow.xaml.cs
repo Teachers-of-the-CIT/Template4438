@@ -120,5 +120,11 @@ namespace Template4438
             _4438_Khalikov boba = new _4438_Khalikov();
             boba.Show();
         }
+
+        private void BtnGafiyatov_Click(object sender, RoutedEventArgs e)
+        {
+            _4438_Gafiyatov window = new _4438_Gafiyatov();
+            window.Show();
+        }
     }
 }
