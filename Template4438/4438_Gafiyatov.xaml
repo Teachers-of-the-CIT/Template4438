@@ -22,6 +22,8 @@
             <TextBlock Text="Имя: Гафиятов" FontSize="24"/>
             <TextBlock  Text="Возраст: 19" FontSize="24" Margin="0 20 0 0"/>
         </StackPanel>
+        <Button x:Name="ImportJSON_BTN" FontSize="20" Content="Импорт JSON" Click="ImportJSON_BTN_Click" Grid.Row="0" Grid.Column="0"/>
+        <Button x:Name="ExportWordBTN" FontSize="20" Content="Экспорт в Word" Click="ExportWordBTN_Click" Grid.Row="0" Grid.Column="2"/>
 
         <Button x:Name="ImportBTN" FontSize="20" Content="Импорт данных" Click="ImportBTN_Click" Grid.Row="2" Grid.Column="0"/>
         <Button x:Name="ExportBTN" FontSize="20" Content="Экспорт в Excel" Grid.Column="2" Grid.Row="2" Click="ExportBTN_Click"/>

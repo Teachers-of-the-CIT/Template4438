@@ -103,5 +103,98 @@ namespace Template4438
             }
             app.Visible = true;
         }
+
+        private async void ImportJSON_BTN_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog()
+            {
+                DefaultExt = "*.json",
+                Filter = "файл Json (Spisok.json)|*.json",
+                Title = "Выберите файл базы данных"
+            };
+            if (!(ofd.ShowDialog() == true))
+                return;
+
+            FileStream fs = new FileStream(ofd.FileName, FileMode.OpenOrCreate);
+            var service = await JsonSerializer.DeserializeAsync<List<Service>>(fs);
+
+            using (LR2Entities db = new LR2Entities())
+            {
+                foreach (Service serv in service)
+                {
+                    Service services = new Service();
+                    services.ID = serv.ID;
+                    services.Service_Name = serv.Service_Name;
+                    services.Service_Type = serv.Service_Type;
+                    services.Service_Code = serv.Service_Code;
+                    services.Cost = serv.Cost;
+                    db.Services.Add(services);
+                }
+                db.SaveChanges();
+            }
+        }
+
+        private void ExportWordBTN_Click(object sender, RoutedEventArgs e)
+        {
+            List<Service> allServices;
+            using (LR2Entities usersEntities = new LR2Entities())
+            {
+                allServices = usersEntities.Services.ToList().OrderBy(s => s.Service_Name).ToList();
+            }
+            var costsCategories = allServices.OrderBy(o => o.Cost).GroupBy(s => s.ID)
+                    .ToDictionary(g => g.Key, g => g.Select(s => new { s.ID, s.Service_Name, s.Service_Type, s.Cost }).ToArray());
+            var app = new Word.Application();
+            Word.Document document = app.Documents.Add();
+            for (int i = 0; i < 3; i++)
+            {
+                var data = i == 0 ? costsCategories.Where(w => w.Value.All(p => p.Service_Type.Equals("Rental")))
+                         : i == 1 ? costsCategories.Where(w => w.Value.All(p => p.Service_Type.Equals("Learning")))
+                         : i == 2 ? costsCategories.Where(w => w.Value.All(p => p.Service_Type.Equals("Rise"))) : costsCategories;
+                Word.Paragraph paragraph = document.Paragraphs.Add();
+                Word.Range range = paragraph.Range;
+                range.Text = $"Категория {i + 1}";
+                
+                range.InsertParagraphAfter();
+                var tableParagraph = document.Paragraphs.Add();
+                var tableRange = tableParagraph.Range;
+                var studentsTable = document.Tables.Add(tableRange, data.Select(s => s.Value.Length).Sum() + 1, 3);
+                studentsTable.Borders.InsideLineStyle = studentsTable.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+                studentsTable.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+                Word.Range cellRange;
+                cellRange = studentsTable.Cell(1, 1).Range;
+                cellRange.Text = "Id";
+                cellRange = studentsTable.Cell(1, 2).Range;
+                cellRange.Text = "Название услуги";
+                cellRange = studentsTable.Cell(1, 3).Range;
+                cellRange.Text = "Стоимость";
+                studentsTable.Rows[1].Range.Bold = 1;
+                studentsTable.Rows[1].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                int row = 1;
+                var stepSize = 1;
+                foreach (var group in data)
+                {
+                    foreach (var currentCost in group.Value)
+                    {
+                        cellRange = studentsTable.Cell(row + stepSize, 1).Range;
+                        cellRange.Text = currentCost.ID.ToString();
+                        cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        cellRange = studentsTable.Cell(row + stepSize, 2).Range;
+                        cellRange.Text = currentCost.Service_Name;
+                        cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        cellRange = studentsTable.Cell(row + stepSize, 3).Range;
+                        cellRange.Text = currentCost.Cost.ToString();
+                        cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        row++;
+                    }
+                }
+                Word.Paragraph countCostsParagraph = document.Paragraphs.Add();
+                Word.Range countCostsRange = countCostsParagraph.Range;
+                countCostsRange.Text = $"Количество услуг - {data.Select(s => s.Value.Length).Sum()} ";
+                countCostsRange.Font.Color = Word.WdColor.wdColorDarkRed;
+                countCostsRange.InsertParagraphAfter();
+                document.Words.Last.InsertBreak(Word.WdBreakType.wdSectionBreakNextPage);
+            }
+            app.Visible = true;
+        }
     }
 }
