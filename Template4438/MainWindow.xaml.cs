@@ -21,6 +21,7 @@ namespace Template4438
     public partial class MainWindow : Window
     {
         public static VasilevWindow vasilevWindow;
+        public static _4438_Gafiyatov GafiyatovWindow;
         public MainWindow()
         {
             InitializeComponent();
@@ -119,6 +120,16 @@ namespace Template4438
         {
             _4438_Khalikov boba = new _4438_Khalikov();
             boba.Show();
+        }
+
+        private void BtnGafiyatov_Click(object sender, RoutedEventArgs e)
+        {
+            if (GafiyatovWindow == null)
+            {
+                GafiyatovWindow = new _4438_Gafiyatov();
+                GafiyatovWindow.Show();
+                this.Close();
+            }
         }
     }
 }
