@@ -13,10 +13,10 @@ namespace Template4438
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class ServiceModelContainer : DbContext
+    public partial class EntityModelContainer : DbContext
     {
-        public ServiceModelContainer()
-            : base("name=ServiceModelContainer")
+        public EntityModelContainer()
+            : base("name=EntityModelContainer")
         {
         }
     

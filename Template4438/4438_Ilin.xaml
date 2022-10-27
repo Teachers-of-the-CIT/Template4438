@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Информация об изменении" Height="450" Width="800">
+        Title="Информация об изменении" Width="600" Height="500" MinWidth="405" MinHeight="490">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -31,14 +31,35 @@
             <!-- Возраст -->
             <StackPanel Name="timeStackPanel" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock Name="timeLabel" Margin="5" Text="Возраст автора: " FontFamily="Roboto" FontSize="24" />
-                <TextBlock Name="timeValue" Margin="5" Text="18" FontFamily="Roboto" FontSize="24" />
+                <TextBlock Name="timeValue" Margin="5" Text="19" FontFamily="Roboto" FontSize="24" />
+            </StackPanel>
+
+            <!-- Функциональный блок -->
+            <StackPanel Name="buttonsStackPanel" Orientation="Horizontal">
+                
+                <!-- Кнопки импорта/экспорта данных -->
+                <StackPanel Name="dataButtonsStackPanel" Orientation="Vertical">
+                    <TextBlock Text="Операции с данными:" FontFamily="Roboto" Padding="5,0,5,0" FontSize="12" />
+                    <Button x:Name="importExcelButton" Content="Импорт Excel" Padding="5" Margin="5" FontFamily="Roboto" FontSize="24" Click="importExcelButton_Click" />
+                    <Button x:Name="importJsonButton"  Content="Импорт JSON" Padding="5" Margin="5" FontFamily="Roboto" FontSize="24" Click="importJsonButton_Click" />
+                    <Button x:Name="exportExcelButton" Content="Экспорт Excel" Padding="5" Margin="5" FontFamily="Roboto" FontSize="24" Click="exportExcelButton_Click" />
+                    <Button x:Name="exportWordButton"  Content="Экспорт Word" Padding="5" Margin="5" FontFamily="Roboto" FontSize="24" Click="exportWordButton_Click" />
+                </StackPanel>
+
+                <!-- Кнопки просмотра/очистки БД -->
+                <StackPanel Name="dbButtonsStackPanel" Orientation="Vertical">
+                    <TextBlock Text="Операции с БД:" FontFamily="Roboto" Padding="5,0,5,0" FontSize="12" />
+                    <Button x:Name="showDbEntitiesButton" Content="Просмотреть БД" Padding="5" Margin="5" FontFamily="Roboto" FontSize="24" Click="showDbEntitiesButton_Click" />
+                    <Button x:Name="clearDbEntitiesButton"  Content="Очистить БД" Padding="5" Margin="5" FontFamily="Roboto" FontSize="24" Click="clearDbEntitiesButton_Click" />
+                </StackPanel>
+                
             </StackPanel>
 
         </StackPanel>
 
         <!-- Footer -->
-        <StackPanel Grid.Row="2" Margin="20,0,20,0" Name="footerStackPanel" Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center">
-            <Button x:Name="backButton" Content="Назад" Padding="5" FontFamily="Roboto" FontSize="24" Click="backButton_Click" />
+        <StackPanel Grid.Row="2" Margin="20,0,20,0" Name="footerStackPanel" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Button x:Name="backButton" Content="Назад" Padding="5" Margin="5" FontFamily="Roboto" FontSize="24" Click="backButton_Click" />
         </StackPanel>
 
     </Grid>
