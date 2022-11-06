@@ -23,6 +23,5 @@ namespace Template4438
         public string Status { get; set; }
         public Nullable<System.DateTime> CloseDate { get; set; }
         public string RentalTime { get; set; }
- 
     }
 }
