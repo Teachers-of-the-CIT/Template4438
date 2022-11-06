@@ -6,9 +6,23 @@
         xmlns:local="clr-namespace:Template4438"
         mc:Ignorable="d"
         Title="_4438_Nasibullin" Height="450" Width="800">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#fac716"></Setter>
+            <Setter Property="Width" Value="150"></Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <TextBlock HorizontalAlignment="Center" Margin="0,28,0,0" TextWrapping="Wrap" Text="Информация об авторе" FontSize="28" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="247,169,0,0" TextWrapping="Wrap" Text="Имя: Ильвир" FontSize="24" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="247,286,0,0" TextWrapping="Wrap" Text="Возраст: 18" FontSize="24" VerticalAlignment="Top"/>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                <TextBlock TextWrapping="Wrap" Text="Информация об авторе" FontSize="28" />
+                <TextBlock TextWrapping="Wrap" Text="Имя: Ильвир" FontSize="24" />
+                <TextBlock TextWrapping="Wrap" Text="Возраст: 18" FontSize="24" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 50 0 0">
+                <Button Content="Импорт данных" x:Name="importBtn" Click="importBtn_Click"></Button>
+                <Button Content="Экспорт данных" x:Name="exportBtn" Margin="10 0 0 0" Click="exportBtn_Click"></Button>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>
