@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:Template4438"
         mc:Ignorable="d"
         Title="_4438_Khalikov" Height="450" Width="800">
-    <Grid>
-        <TextBlock>Айназ, уже 19 (((</TextBlock>
-    </Grid>
+    <StackPanel>
+        <TextBlock HorizontalAlignment="Center">Айназ, уже 19 (((</TextBlock>
+        <Button x:Name="BtnExpot" Click="BtnExpot_Click">Экспорт в Excel</Button>
+        <Button x:Name="BtnImport" Click="BtnImport_Click">Импорт данных</Button>
+    </StackPanel>
 </Window>
