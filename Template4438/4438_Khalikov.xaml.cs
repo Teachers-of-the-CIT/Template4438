@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Excel = Microsoft.Office.Interop.Excel;
 using Microsoft.Win32;
+using System.IO;
+using System.Text.Json;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace Template4438
 {
@@ -32,14 +35,14 @@ namespace Template4438
             List<Orders> allOrders = new List<Orders>();
             using (LR2_ISRPOEntities LR2Entities = new LR2_ISRPOEntities())
             {
-                allOrders = LR2Entities.Orders.ToList().OrderBy(s =>s.Дата_создания).ToList();
-                
-                for(int i = 0; i < allOrders.Count(); i++)
+                allOrders = LR2Entities.Orders.ToList().OrderBy(s => s.Дата_создания).ToList();
+
+                for (int i = 0; i < allOrders.Count(); i++)
                 {
                     bool flag = true;
-                    for(int j = 0; j < allDates.Count(); j++)
+                    for (int j = 0; j < allDates.Count(); j++)
                     {
-                        if(allOrders[i].Дата_создания == allDates[j])
+                        if (allOrders[i].Дата_создания == allDates[j])
                         {
                             flag = false;
                         }
@@ -102,7 +105,8 @@ namespace Template4438
                 rangeBorders.Borders[Excel.XlBordersIndex.xlInsideVertical].LineStyle = Excel.XlLineStyle.xlContinuous;
                 worksheet.Columns.AutoFit();
             }
-            app.Visible = true;
+            app.Visible = true;
+
         }
 
         private void BtnImport_Click(object sender, RoutedEventArgs e)
@@ -114,7 +118,8 @@ namespace Template4438
                 Title = "Выберите файл базы данных"
             };
             if (!(ofd.ShowDialog() == true))
-                return;
+                return;
+
             string[,] list;
             Excel.Application ObjWorkExcel = new Excel.Application();
             Excel.Workbook ObjWorkBook = ObjWorkExcel.Workbooks.Open(ofd.FileName);
@@ -156,7 +161,137 @@ namespace Template4438
                     });
                 }
                 LR2Entities.SaveChanges();
-            }
+            }
+
+        }
+
+        private async void BtnImportJSON_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog()
+            {
+                DefaultExt = "*.json;",
+                Filter = "файл JSON (Spisok.json)|*.json",
+                Title = "Выберите файл базы данных"
+            };
+            if (!(ofd.ShowDialog() == true))
+                return;
+
+            FileStream fs = new FileStream(ofd.FileName, FileMode.OpenOrCreate);
+            var orders = await JsonSerializer.DeserializeAsync<List<JSONOrder>>(fs);
+
+            JSONOrder example = new JSONOrder()
+            {
+                Id = 1,
+                CodeOrder = "123",
+                CreateDate = "235",
+                CreateTime = "fdgd",
+                CodeClient = "fsdfds",
+                Услуги = "fafd",
+                Статус = "afe",
+                ClosedDate = "afsdg",
+                ProkatTime = "asdffa"
+            };
+            string s = JsonSerializer.Serialize(example);
+            Console.WriteLine(s);
+            using (LR2_ISRPOEntities LR2Entities = new LR2_ISRPOEntities())
+            {
+                foreach (JSONOrder order in orders)
+                {
+                    LR2Entities.Orders.Add(new Orders()
+                    {
+                        ID = order.Id + 200,
+                        Код_заказа = order.CodeOrder,
+                        Дата_создания = order.CreateDate,
+                        Время_заказа = order.CreateTime,
+                        Код_клиента = order.CodeClient,
+                        Услуги = order.Услуги,
+                        Статус = order.Статус,
+                        Дата_закрытия = order.ClosedDate,
+                        Время_проката = order.ProkatTime
+                    });
+                }
+                LR2Entities.SaveChanges();
+            }
+
+        }
+
+        private void BtnExportWord_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> allDates = new List<string>();
+            List<Orders> allOrders = new List<Orders>();
+            using (LR2_ISRPOEntities LR2Entities = new LR2_ISRPOEntities())
+            {
+                allOrders = LR2Entities.Orders.ToList().OrderBy(s => s.Дата_создания).ToList();
+
+                for (int i = 0; i < allOrders.Count(); i++)
+                {
+                    bool flag = true;
+                    for (int j = 0; j < allDates.Count(); j++)
+                    {
+                        if (allOrders[i].Дата_создания == allDates[j])
+                        {
+                            flag = false;
+                        }
+                    }
+                    if (flag && allOrders[i].Дата_создания != null && allOrders[i].Дата_создания != "")
+                        allDates.Add(allOrders[i].Дата_создания);
+                }
+            }
+
+            var app = new Word.Application();
+            Word.Document document = app.Documents.Add();
+
+            foreach (string date in allDates)
+            {
+                Word.Paragraph paragraph = document.Paragraphs.Add();
+                Word.Range range = paragraph.Range;
+                range.Text = date;
+                paragraph.set_Style("Заголовок 1");
+                range.InsertParagraphAfter();
+                Word.Paragraph tableParagraph = document.Paragraphs.Add();
+                Word.Range tableRange = tableParagraph.Range;
+                Word.Table employeessTable = document.Tables.Add(tableRange, allOrders.Count + 1, 7);
+                employeessTable.Borders.InsideLineStyle = employeessTable.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+                employeessTable.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+                Word.Range cellRange;
+                cellRange = employeessTable.Cell(1, 1).Range;
+                cellRange.Text = "Id";
+                cellRange = employeessTable.Cell(1, 2).Range;
+                cellRange.Text = "Код заказа";
+                cellRange = employeessTable.Cell(1, 3).Range;
+                cellRange.Text = "Код клиента";
+                cellRange = employeessTable.Cell(1, 4).Range;
+                cellRange.Text = "Услуги";
+                employeessTable.Rows[1].Range.Bold = 1;
+                employeessTable.Rows[1].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                int p = 1;
+                foreach (var currentOrder in allOrders)
+                {
+                    if (currentOrder.Дата_создания == date)
+                    {
+                        cellRange = employeessTable.Cell(p + 1, 1).Range;
+                        cellRange.Text = currentOrder.ID.ToString();
+                        cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        cellRange = employeessTable.Cell(p + 1, 2).Range;
+                        cellRange.Text = currentOrder.Код_заказа;
+                        cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        cellRange = employeessTable.Cell(p + 1, 3).Range;
+                        cellRange.Text = currentOrder.Код_клиента;
+                        cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        cellRange = employeessTable.Cell(p + 1, 4).Range;
+                        cellRange.Text = currentOrder.Услуги;
+                        cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                        p++;
+                    }
+
+                }
+
+            }
+
+
+            document.Words.Last.InsertBreak(Word.WdBreakType.wdPageBreak);
+            app.Visible = true;
+            document.SaveAs2(@"C:\Users\khali\OneDrive\Рабочий стол\Шарага\ИСРПО\7sem\3ЛР\outputFilePdf.pdf", Word.WdExportFormat.wdExportFormatPDF);
         }
     }
 }

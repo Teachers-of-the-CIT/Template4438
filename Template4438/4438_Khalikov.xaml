@@ -10,5 +10,7 @@
         <TextBlock HorizontalAlignment="Center">Айназ, уже 19 (((</TextBlock>
         <Button x:Name="BtnExpot" Click="BtnExpot_Click">Экспорт в Excel</Button>
         <Button x:Name="BtnImport" Click="BtnImport_Click">Импорт данных</Button>
+        <Button x:Name="BtnImportJSON" Click="BtnImportJSON_Click">Импорт JSON данных</Button>
+        <Button x:Name="BtnExportWord" Click="BtnExportWord_Click">Экспорт в word</Button>
     </StackPanel>
 </Window>

@@ -15,11 +15,17 @@ namespace Template4438
     
     public partial class LR2_ISRPOEntities : DbContext
     {
+        private static LR2_ISRPOEntities _context;
         public LR2_ISRPOEntities()
             : base("name=LR2_ISRPOEntities")
         {
         }
-    
+        public static LR2_ISRPOEntities GetContext()
+        {
+            if (_context == null)
+                _context = new LR2_ISRPOEntities();
+            return _context;
+        }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
