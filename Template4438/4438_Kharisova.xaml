@@ -6,7 +6,25 @@
         xmlns:local="clr-namespace:Template4438"
         mc:Ignorable="d"
         Title="_4438_Kharisova" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="BtnStyle">
+            <Setter Property="Control.Width" Value="300"></Setter>
+            <Setter Property="Control.Height" Value="50"></Setter>
+            <Setter Property="Control.FontSize" Value="20"></Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <TextBox Text="Elvira, 18 y.o." FontSize="50"></TextBox>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBox Grid.Row="0"  Text="Elvira, 18 y.o." TextAlignment="Center" FontSize="50"></TextBox>
+        <Button Grid.Row="1"  x:Name="BtnImport" Click="BtnImport_Click" Style="{StaticResource BtnStyle}">
+            Import data
+        </Button>
+        <Button Grid.Row="2"  x:Name="BtnExport" Click="BtnExport_Click" Style="{StaticResource BtnStyle}">
+            Export data
+        </Button>
     </Grid>
 </Window>
