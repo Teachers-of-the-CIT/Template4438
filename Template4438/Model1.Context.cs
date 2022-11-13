@@ -26,5 +26,7 @@ namespace Template4438
         }
     
         public virtual DbSet<Services> Services { get; set; }
+        public virtual DbSet<SecondServices> SecondServices { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }

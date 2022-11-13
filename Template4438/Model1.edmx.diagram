@@ -5,7 +5,9 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b58ab0879a2042aba339c0edfccaeaad" Name="Diagram1">
-        <EntityTypeShape EntityType="ServicesTableModel.Services" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServicesTableModel.Services" Width="3.25" PointX="1.625" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ServicesTableModel.SecondServices" Width="1.5" PointX="5.625" PointY="1.375" />
+        <EntityTypeShape EntityType="ServicesTableModel.sysdiagrams" Width="1.5" PointX="7.625" PointY="1.375" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -13,6 +13,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Excel = Microsoft.Office.Interop.Excel;
+using Newtonsoft.Json;
+using System.IO;
+using System.Globalization;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace Template4438
 {
@@ -73,20 +77,30 @@ namespace Template4438
 
 			GC.Collect();
 
-			using (ServicesTableEntities servicesTableEntities = new ServicesTableEntities())
+			try
 			{
-				for (int i = 1; i < _rows; i++)
+				using (ServicesTableEntities servicesTableEntities = new ServicesTableEntities())
 				{
-					servicesTableEntities.Services.Add(new Services() {
-						Name = list[i, 1],
-						KindService = list[i, 2],
-						CodeService = list[i, 3],
-						Cost = Convert.ToInt32(list[i, 4])
-					});
-				}
+					for (int i = 1; i < _rows; i++)
+					{
+						servicesTableEntities.Services.Add(new Services()
+						{
+							Name = list[i, 1],
+							KindService = list[i, 2],
+							CodeService = list[i, 3],
+							Cost = Convert.ToInt32(list[i, 4])
+						});
+					}
 
-				servicesTableEntities.SaveChanges();
-			}	
+					servicesTableEntities.SaveChanges();
+				}
+			}
+			catch
+			{
+				MessageBox.Show("При попытке сохранения информации в базе данных возникла ошибка.");
+			}
+			
+			MessageBox.Show("Импорт данных выполнен успешно.");
 		}
 
 		private void ExportData_Click(object sender, RoutedEventArgs e)
@@ -136,7 +150,156 @@ namespace Template4438
 
 			workbook.SaveAs(@"D:\outputFileExcel.xlsx");
 
-			MessageBox.Show("Экспорт выполнен успешно!");
+			MessageBox.Show("Экспорт выполнен успешно.");
+		}
+
+		/// <summary>
+		/// Импортировать данные из JSON файла в БД.
+		/// </summary>
+		private void ImportJson_Click(object sender, RoutedEventArgs e)
+		{
+			List<Classes.SecondServicesModel> secondServices = new List<Classes.SecondServicesModel>();
+
+			string fileName = "../../../Data.json";
+			string jsonString = File.ReadAllText(fileName);
+
+			secondServices = JsonConvert.DeserializeObject<List<Classes.SecondServicesModel>>(jsonString);
+
+			AddDataToDb(secondServices);
+		}
+
+		private void AddDataToDb(List<Classes.SecondServicesModel> secondServicesModels)
+		{
+			var cultureInfo = new CultureInfo("de-DE");
+			DateTime? dt = null;
+
+			using (var entity = new ServicesTableEntities())
+			{
+				SecondServices secondServices;
+
+				foreach (var item in secondServicesModels)
+				{
+					secondServices = new SecondServices();
+
+					secondServices.Id = item.Id;
+					secondServices.OrderCode = item.CodeOrder;
+					string date = item.CreateDate.ToString();
+					secondServices.CreateDate = DateTime.Parse(date, cultureInfo);
+					secondServices.OrderTime = item.CreateTime;
+					secondServices.UserCode = Convert.ToInt32(item.CodeClient);
+					secondServices.NumberServices = item.Services;
+					secondServices.Status = item.Status;
+					secondServices.CloseDate = String.IsNullOrEmpty(item.ClosedDate) ? dt : DateTime.Parse(item.ClosedDate, cultureInfo);
+					secondServices.RentalTime = item.ProkatTime;
+					
+					entity.SecondServices.Add(secondServices);
+				}
+
+				entity.SaveChanges();
+				MessageBox.Show("Импортирование данных из Json файла выполнено успешно");
+			}
+		}
+
+		private int GetCountListElements(List<Services> services, int i)
+		{
+			int count = 0;
+
+			foreach (var item in services)
+			{
+				if (item.Cost > costCategory[i] && item.Cost < costCategory[i + 1])
+				{
+					count++;
+				}
+			}
+
+			return count;
+		}
+
+		public int[] costCategory = { 0, 350, 800, 2000 };
+
+		private void ExportWord_Click(object sender, RoutedEventArgs e)
+		{
+			var Services = new List<Services>();
+
+			using (var entity = new ServicesTableEntities())
+			{
+				Services = entity.Services.ToList();
+
+				var app = new Word.Application();
+				Word.Document document = app.Documents.Add();
+
+				
+
+				for (int i = 0; i < costCategory.Count() - 1; i++)
+				{
+					Word.Paragraph paragraph = document.Paragraphs.Add();
+					Word.Range range = paragraph.Range;
+
+					range.Text = "Группа " + (i + 1);
+					range.set_Style("Заголовок 1");
+					range.InsertParagraphAfter();
+
+					Word.Paragraph tableParagrath = document.Paragraphs.Add();
+					Word.Range tableRange = tableParagrath.Range;
+
+					Word.Table serviceTable = document.Tables.Add(tableRange, GetCountListElements(Services, i) + 1, 5);
+
+					serviceTable.Borders.InsideLineStyle = serviceTable.Borders.OutsideLineStyle = Word.WdLineStyle.wdLineStyleSingle;
+					serviceTable.Range.Cells.VerticalAlignment = Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+
+					Word.Range cellRange = serviceTable.Cell(1, 1).Range;
+					cellRange.Text = "Идентификатор";
+
+					cellRange = serviceTable.Cell(1, 2).Range;
+					cellRange.Text = "Наименование";
+
+					cellRange = serviceTable.Cell(1, 3).Range;
+					cellRange.Text = "Вид услуги";
+
+					cellRange = serviceTable.Cell(1, 4).Range;
+					cellRange.Text = "Код услуги";
+
+					cellRange = serviceTable.Cell(1, 5).Range;
+					cellRange.Text = "Стоимость";
+
+					serviceTable.Rows[1].Range.Bold = 1;
+					serviceTable.Rows[1].Range.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+					int index = 1;
+
+					foreach (var item in Services)
+					{
+						if (item.Cost > costCategory[i] && item.Cost < costCategory[i + 1])
+						{
+							cellRange = serviceTable.Cell(index + 1, 1).Range;
+							cellRange.Text = item.Id.ToString();
+							cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+							cellRange = serviceTable.Cell(index + 1, 2).Range;
+							cellRange.Text = item.Name.ToString();
+							cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+							cellRange = serviceTable.Cell(index + 1, 3).Range;
+							cellRange.Text = item.KindService.ToString();
+							cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+							cellRange = serviceTable.Cell(index + 1, 4).Range;
+							cellRange.Text = item.CodeService.ToString();
+							cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+							cellRange = serviceTable.Cell(index + 1, 5).Range;
+							cellRange.Text = item.Cost.ToString();
+							cellRange.ParagraphFormat.Alignment = Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+							index++;
+						}
+					}
+
+					app.Visible = true;
+					//document.SaveAs2(@"D:\outputFileWord.docx");
+					//document.SaveAs2(@"D:\outputFileWord.pdf", Word.WdExportFormat.wdExportFormatPDF);
+				}
+			}
 		}
 	}
 }
