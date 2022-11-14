@@ -6,7 +6,17 @@
         xmlns:local="clr-namespace:Template4438"
         mc:Ignorable="d"
         Title="_4438_Galimov" Height="450" Width="800">
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-        <TextBlock>Рустем 19 лет</TextBlock> 
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Margin="0,40,0,0" Orientation="Vertical" HorizontalAlignment="Center">
+                <TextBlock TextWrapping="Wrap" Text="Информация об авторе" FontSize="28" />
+                <TextBlock TextWrapping="Wrap" Text="Имя: Рустем" FontSize="24" />
+                <TextBlock TextWrapping="Wrap" Text="Возраст: 19" FontSize="24" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 50 0 0">
+                <Button Content="Импорт данных" x:Name="importBtn" Click="importBtn_Click"></Button>
+                <Button Content="Экспорт данных" x:Name="exportBtn" Margin="10 0 0 0" Click="exportBtn_Click"></Button>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>

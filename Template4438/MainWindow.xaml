@@ -41,7 +41,7 @@
         <Button x:Name="BGallyamov" Click="BGallyamov_Click" Content="Галлямов А.Р." Grid.Row="7"></Button>
         <Button x:Name="BTovmach" Click="BTovmach_Click"  Content="Товмач А.О." Grid.Row="9"></Button>
         <Button x:Name="BtnSharafetdinov" Click="BtnSharafetdinov_Click" Content="Шарафетдинов Н.А." Grid.Row="23"></Button>
-        <Button x:Name="btnGalimov" Click="btnGalimov_Click" Content="Галимов" Grid.Row="9"></Button>
+        <Button x:Name="btnGalimov" Click="btnGalimov_Click" Content="Галимов Р.Р" Grid.Row="9"></Button>
         <Button x:Name="BtnNasibullin" Click="BtnNasibullin_Click" Content="Насибуллин И.И." Grid.Row="13"></Button>
         <Button x:Name="BtnShigabiev" Click="BtnShigabiev_Click" Content="Шигабиев Ш.Р." Grid.Row="25"/>
         <Button x:Name="BtnBritvina" Click="BtnBritvina_Click" Content="Бритвина П.А" Grid.Row="22"/>
