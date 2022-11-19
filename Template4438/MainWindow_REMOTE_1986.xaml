@@ -37,16 +37,6 @@
         <Button x:Name="BnTask" Click="BnTask_Click" Content="Задача" Grid.Row="0"></Button>
         <Button x:Name="BnKarnaukh" Click="BnKarnaukh_Click" Content="Карнаух А. Л." Grid.Row="1"></Button>
         <Button x:Name="BnVafin" Click="BnVafin_Click" Content="Вафин Б. М." Grid.Row="3"></Button>
-<<<<<<< HEAD
-        <Button x:Name="BtnVasilev" Click="BtnVasilev_Click" Content="Васильев М.В." Grid.Row="2"></Button>
-        <Button x:Name="BGallyamov" Click="BGallyamov_Click" Content="Галлямов А.Р." Grid.Row="3"></Button>
-        <Button x:Name="BTovmach" Click="BTovmach_Click"  Content="Товмач А.О." Grid.Row="4"></Button>
-        <Button x:Name="BtnSharafetdinov" Click="BtnSharafetdinov_Click" Content="Шарафетдинов Н.А." Grid.Row="5"></Button>
-        <Button x:Name="btnGalimov" Click="btnGalimov_Click" Content="Галимов" Grid.Row="6"></Button>
-        <Button x:Name="BtnNasibullin" Click="BtnNasibullin_Click" Content="Насибуллин И.И." Grid.Row="7"></Button>
-        <Button x:Name="BtnShigabiev" Click="BtnShigabiev_Click" Content="Шигабиев Ш.Р." Grid.Row="8"/>
-        <Button x:Name="BtnBritvina" Click="BtnBritvina_Click" Content="Бритвина П.А" Grid.Row="9"/>
-=======
         <Button x:Name="BtnVasilev" Click="BtnVasilev_Click" Content="Васильев М.В." Grid.Row="5"></Button>
         <Button x:Name="BGallyamov" Click="BGallyamov_Click" Content="Галлямов А.Р." Grid.Row="7"></Button>
         <Button x:Name="BTovmach" Click="BTovmach_Click"  Content="Товмач А.О." Grid.Row="9"></Button>
@@ -58,6 +48,5 @@
         <Button x:Name="BtnNabiullina" Click="BtnNabiullina_Click" Content="Набиуллина Г. Р." Grid.Row="14" Background="Pink"></Button>
         <Button x:Name="BtnSafiullin" Click="BtnSafiullin_Click" Content="Сафиуллин Р.Р." Grid.Row="17"/>
         <Button x:Name="BtnKhalikov" Click="BtnKhalikov_Click" Content="Халиков А.С." Grid.Row="21"/>
->>>>>>> 212eb037e0722a0019cfff0049f4cd2751198b14
     </Grid>
 </Window>

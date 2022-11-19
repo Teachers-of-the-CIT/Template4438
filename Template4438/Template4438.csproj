@@ -64,8 +64,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="4438SafiullinRR.xaml.cs">
+      <DependentUpon>4438SafiullinRR.xaml</DependentUpon>
+    </Compile>
     <Compile Include="4438_Britvina.xaml.cs">
       <DependentUpon>4438_Britvina.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="4438_Khalikov.xaml.cs">
+      <DependentUpon>4438_Khalikov.xaml</DependentUpon>
     </Compile>
     <Compile Include="4438_Tovmach.xaml.cs">
       <DependentUpon>4438_Tovmach.xaml</DependentUpon>
@@ -94,8 +100,13 @@
     <Compile Include="GallyamovARwindow.xaml.cs">
       <DependentUpon>GallyamovARwindow.xaml</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Order.cs">
       <DependentUpon>BaseModel.tt</DependentUpon>
+=======
+    <Compile Include="NabiullinaWindow.xaml.cs">
+      <DependentUpon>NabiullinaWindow.xaml</DependentUpon>
+>>>>>>> 212eb037e0722a0019cfff0049f4cd2751198b14
     </Compile>
     <Compile Include="SharafetdinovWindow.xaml.cs">
       <DependentUpon>SharafetdinovWindow.xaml</DependentUpon>
@@ -109,7 +120,15 @@
     <Compile Include="VasilevWindow.xaml.cs">
       <DependentUpon>VasilevWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="4438SafiullinRR.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="4438_Britvina.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="4438_Khalikov.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -151,6 +170,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NabiullinaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SharafetdinovWindow.xaml">
     </Page>
     <Page Include="ShigabievWindow.xaml">
