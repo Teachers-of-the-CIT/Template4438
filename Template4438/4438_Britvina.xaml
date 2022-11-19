@@ -7,6 +7,14 @@
         mc:Ignorable="d"
         Title="_4438_Britvina" Height="450" Width="800">
     <Grid>
+         <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+
+        </Grid.RowDefinitions>
         <TextBlock>Поля 19 лет</TextBlock>
+        <Button x:Name="Import" Content="Импорт данных" Width="50" Height="30" Grid.Row="1" Click="Import_Click"></Button>
+        <Button x:Name="Export" Content="Экспорт в Excel" Width="50" Height="30" Grid.Row="2" Click="Export_Click"></Button>
     </Grid>
 </Window>
