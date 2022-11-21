@@ -1,9 +1,12 @@
-﻿using Microsoft.Win32;
+﻿using Microsoft.Office.Interop.Word;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +17,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Excel = Microsoft.Office.Interop.Excel;
+using Window = System.Windows.Window;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace Template4438
 {
@@ -110,6 +115,124 @@ namespace Template4438
                     worksheet.Columns.AutoFit();
                 }
                 app.Visible = true;
+            }
+        }
+
+        private void WordExportBtn_Click(object sender, RoutedEventArgs e)
+        {
+            using (ISRPO_Laba2Entities ent = new ISRPO_Laba2Entities())
+            {
+                List<Labatwo> ordersList = ent.Labatwo.ToList();
+                List<string> statusList = ordersList.Select(x => x.Status).Distinct().ToList();
+
+                Word.Application app = new Word.Application();
+
+                Word.Document document = app.Documents.Add();
+
+                for (int i = 0; i < statusList.Count(); i++)
+                {
+                    Word.Paragraph paragraph = document.Paragraphs.Add();
+                    Word.Range range = paragraph.Range;
+                    range.Text = statusList[i].ToString();
+                    paragraph.set_Style("Заголовок 1");
+                    range.InsertParagraphAfter();
+
+                    Word.Paragraph tableParagraph = document.Paragraphs.Add();
+                    Word.Range tableRange = tableParagraph.Range;
+
+
+                    Word.Range cellRange;
+                    int row = 1;
+                    Word.Table ordersTable = document.Tables.Add(tableRange, ordersList.Select(x => x.Status).Where(x => range.Text.Contains(x)).ToList().Count() + 1, 5);
+
+
+                    foreach (Labatwo orders in ordersList)
+                    {
+                        var itemlist = orders.Status;
+                        if (range.Text.Contains(itemlist))
+                        {
+                            ordersTable.Borders.InsideLineStyle =
+                                ordersTable.Borders.OutsideLineStyle =
+                                Word.WdLineStyle.wdLineStyleSingle;
+                            ordersTable.Range.Cells.VerticalAlignment =
+                                Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+
+                            cellRange = ordersTable.Cell(1, 1).Range;
+                            cellRange.Text = "Id";
+                            cellRange = ordersTable.Cell(1, 2).Range;
+                            cellRange.Text = "Код Заказа";
+                            cellRange = ordersTable.Cell(1, 3).Range;
+                            cellRange.Text = "Дата создания";
+                            cellRange = ordersTable.Cell(1, 4).Range;
+                            cellRange.Text = "Код Клиента";
+                            cellRange = ordersTable.Cell(1, 5).Range;
+                            cellRange.Text = "Услуги";
+
+                            ordersTable.Rows[1].Range.Bold = 1;
+                            ordersTable.Rows[1].Range.ParagraphFormat.Alignment =
+                            Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                            cellRange = ordersTable.Cell(row + 1, 1).Range;
+                            cellRange.Text = orders.Id.ToString();
+                            cellRange.ParagraphFormat.Alignment =
+                            Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                            cellRange = ordersTable.Cell(row + 1, 2).Range;
+                            cellRange.Text = orders.OrderCode;
+                            cellRange.ParagraphFormat.Alignment =
+                            Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                            cellRange = ordersTable.Cell(row + 1, 3).Range;
+                            cellRange.Text = orders.Date.ToString();
+                            cellRange.ParagraphFormat.Alignment =
+                            Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                            cellRange = ordersTable.Cell(row + 1, 4).Range;
+                            cellRange.Text = orders.ClientCode.ToString();
+                            cellRange.ParagraphFormat.Alignment =
+                            Word.WdParagraphAlignment.wdAlignParagraphCenter;
+
+                            cellRange = ordersTable.Cell(row + 1, 5).Range;
+                            cellRange.Text = orders.Services.ToString();
+                            cellRange.ParagraphFormat.Alignment =
+                            Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                            row = row + 1;
+                        }
+                    }
+                    app.Visible = true;
+
+                }
+            }
+        }
+
+        private void JsonImprtoBtn_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog()
+            {
+                DefaultExt = "*.json",
+                Filter = "файл Json (Spisok.json)|*.json",
+                Title = "выберите файл базы данных"
+            };
+            if (!(dialog.ShowDialog() == true)) return;
+            FileStream fileStream = new FileStream(dialog.FileName, FileMode.OpenOrCreate);
+            List<JsonOrders> ordersList = JsonSerializer.Deserialize<List<JsonOrders>>(fileStream);
+            using (ISRPO_Laba2Entities ent = new ISRPO_Laba2Entities())
+            {
+                foreach (JsonOrders o in ordersList)
+                {
+                    ent.Labatwo.Add(new Labatwo()
+                    {
+                        OrderCode = o.CodeOrder,
+                        Date = DateTime.Parse(o.CreateDate),
+                        Time = DateTime.Parse(o.CreateTime).TimeOfDay,
+                        ClientCode = Convert.ToInt32(o.CodeClient),
+                        Services = o.Services,
+                        Status = o.Status,
+                        Closing_Date = o.CreateDate == "" ? default(DateTime) : DateTime.Parse(o.CreateDate),
+                        Rental_Time = o.ProkatTime
+                    });
+                    ent.SaveChanges();
+                }
             }
         }
     }
