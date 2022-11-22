@@ -122,12 +122,12 @@ namespace Template4438
             };
             if (!(dialog.ShowDialog() == true)) return;
             FileStream fileStream = new FileStream(dialog.FileName, FileMode.OpenOrCreate);
-            List<JsonOrders> ordersList = JsonSerializer.Deserialize<List<JsonOrders>>(fileStream);
-            using (MainEntities ent = new MainEntities())
+            List<Order> ordersList = JsonSerializer.Deserialize<List<Order>>(fileStream);
+            using (excelimportEntities ent = new excelimportEntities())
             {
-                foreach (JsonOrders o in ordersList)
+                foreach (Order o in ordersList)
                 {
-                    ent.Orders.Add(new Orders()
+                    ent.Orders.Add(new Order()
                     {
                         OrderCode = o.CodeOrder,
                         CreateDate = DateTime.Parse(o.CreateDate),
