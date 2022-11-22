@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Excel = Microsoft.Office.Interop.Excel;
-
+using System.Text.Json;
 namespace Template4438
 {
     /// <summary>
@@ -109,6 +110,42 @@ namespace Template4438
                 }
                 app.Visible = true;
             }
+        }
+
+        private void importJsonBtn_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog()
+            {
+                DefaultExt = "*.json",
+                Filter = "файл Json (Spisok.json)|*.json",
+                Title = "выберите файл базы данных"
+            };
+            if (!(dialog.ShowDialog() == true)) return;
+            FileStream fileStream = new FileStream(dialog.FileName, FileMode.OpenOrCreate);
+            List<JsonOrders> ordersList = JsonSerializer.Deserialize<List<JsonOrders>>(fileStream);
+            using (MainEntities ent = new MainEntities())
+            {
+                foreach (JsonOrders o in ordersList)
+                {
+                    ent.Orders.Add(new Orders()
+                    {
+                        OrderCode = o.CodeOrder,
+                        CreateDate = DateTime.Parse(o.CreateDate),
+                        OrderTime = DateTime.Parse(o.CreateTime).TimeOfDay,
+                        ClientCode = Convert.ToInt32(o.CodeClient),
+                        Services = o.Services,
+                        Status = o.Status,
+                        CloseDate = o.CreateDate == "" ? default(DateTime) : DateTime.Parse(o.CreateDate),
+                        RentalTime = o.ProkatTime
+                    });
+                    ent.SaveChanges();
+                }
+            }
+        }
+
+        private void exportJsonBtn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

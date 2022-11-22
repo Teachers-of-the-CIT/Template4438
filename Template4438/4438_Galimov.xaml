@@ -17,6 +17,10 @@
                 <Button Content="Импорт данных" x:Name="importBtn" Click="importBtn_Click"></Button>
                 <Button Content="Экспорт данных" x:Name="exportBtn" Margin="10 0 0 0" Click="exportBtn_Click"></Button>
             </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 50 0 0">
+                <Button Content="Импорт данных Json" x:Name="importJsonBtn" Click="importJsonBtn_Click"></Button>
+                <Button Content="Экспорт данных в Word" x:Name="exportJsonBtn" Margin="10 0 0 0" Click="exportJsonBtn_Click"></Button>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>
