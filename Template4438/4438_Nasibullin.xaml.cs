@@ -14,6 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Navigation;
 using Excel = Microsoft.Office.Interop.Excel;
+using Word = Microsoft.Office.Interop.Word;
+using System.Text.Json;
+using System.IO;
 
 namespace Template4438
 {
@@ -108,6 +111,104 @@ namespace Template4438
                     worksheet.Columns.AutoFit();
                 }
                 app.Visible = true;
+            }
+        }
+
+        private async void importnJsonBtn_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog()
+            {
+                DefaultExt = "*.json",
+                Filter = "файл Json (Spisok.json)|*.json",
+                Title = "выберите файл базы данных"
+            };
+            if (!(dialog.ShowDialog() == true)) return;
+            FileStream fileStream = new FileStream(dialog.FileName, FileMode.OpenOrCreate);
+            List<JsonOrder> ordersList = await JsonSerializer.DeserializeAsync<List<JsonOrder>>(fileStream);
+
+            using (BaseModelEntities BME = new BaseModelEntities())
+            {
+                foreach (JsonOrder o in ordersList)
+                {
+                    Order ordtabl = new Order();
+                    ordtabl.OrderCode = o.CodeOrder;
+                    ordtabl.CreateDate = o.CreateDate;
+                    ordtabl.OrderTime = o.CreateTime;
+                    ordtabl.ClientCode = Int32.Parse(o.CodeClient);
+                    ordtabl.Services = o.Services;
+                    ordtabl.Status = o.Status;
+                    ordtabl.CloseDate = o.ClosedDate;
+                    ordtabl.RentialTime = o.ProkatTime;
+                    BME.Orders.Add(ordtabl);
+                }
+                BME.SaveChanges();
+                MessageBox.Show("Данные импортированы!");
+            }
+        }
+
+        private void exportWordBtn_Click(object sender, RoutedEventArgs e)
+        {
+            using (BaseModelEntities bme = new BaseModelEntities())
+            {
+                List<Order> orderlist = bme.Orders.ToList();
+                List<string> dateList = orderlist.Select(x => x.CreateDate).Distinct().ToList();
+                Word.Application app = new Word.Application();
+                Word.Document document = app.Documents.Add();
+                for(int i = 0; i< dateList.Count(); i++)
+                {
+                    Word.Paragraph paragraph = document.Paragraphs.Add();
+                    Word.Range range = paragraph.Range;
+                    range.Text = dateList[i].ToString();
+                    paragraph.set_Style("Заголовок 1");
+                    range.InsertParagraphAfter();
+                    Word.Paragraph tableParagraph = document.Paragraphs.Add();
+                    Word.Range tableRange = tableParagraph.Range;
+                    Word.Range cellRange;
+                    int row = 1;
+                    Word.Table ordersTable = document.Tables.Add(tableRange, orderlist.Select(x => DateTime.Parse(Convert.ToString(x.CreateDate)).ToShortDateString().ToString()).Where(x => range.Text.Contains(x)).ToList().Count() + 1, 4);
+                    foreach (Order orders in orderlist)
+                    {
+                        var itemlist = DateTime.Parse(Convert.ToString(orders.CreateDate)).ToShortDateString().ToString();
+                        if (range.Text.Contains(itemlist))
+                        {
+                            ordersTable.Borders.InsideLineStyle =
+                                ordersTable.Borders.OutsideLineStyle =
+                                Word.WdLineStyle.wdLineStyleSingle;
+                            ordersTable.Range.Cells.VerticalAlignment =
+                                Word.WdCellVerticalAlignment.wdCellAlignVerticalCenter;
+
+                            cellRange = ordersTable.Cell(1, 1).Range;
+                            cellRange.Text = "ID";
+                            cellRange = ordersTable.Cell(1, 2).Range;
+                            cellRange.Text = "Код Заказа";
+                            cellRange = ordersTable.Cell(1, 3).Range;
+                            cellRange.Text = "Код Клиента";
+                            cellRange = ordersTable.Cell(1, 4).Range;
+                            cellRange.Text = "Услуги";
+                            ordersTable.Rows[1].Range.Bold = 1;
+                            ordersTable.Rows[1].Range.ParagraphFormat.Alignment =
+                            Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                            cellRange = ordersTable.Cell(row + 1, 1).Range;
+                            cellRange.Text = orders.id.ToString();
+                            cellRange.ParagraphFormat.Alignment =
+                            Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                            cellRange = ordersTable.Cell(row + 1, 2).Range;
+                            cellRange.Text = orders.OrderCode;
+                            cellRange.ParagraphFormat.Alignment =
+                            Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                            cellRange = ordersTable.Cell(row + 1, 3).Range;
+                            cellRange.Text = orders.ClientCode.ToString();
+                            cellRange.ParagraphFormat.Alignment =
+                            Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                            cellRange = ordersTable.Cell(row + 1, 4).Range;
+                            cellRange.Text = orders.Services.ToString();
+                            cellRange.ParagraphFormat.Alignment =
+                            Word.WdParagraphAlignment.wdAlignParagraphCenter;
+                            row = row + 1;
+                        }
+                    }
+                    app.Visible = true;
+                }
             }
         }
     }
